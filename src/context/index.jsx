@@ -31,10 +31,23 @@ const MyProvider = (props) => {
             })
         } else {
             // next stage
-            setStage(2)
+            setStage(2);
+            setTimeout(()=>{
+                generateLoser();
+            },2000)
         }
     }
 
+    const generateLoser = () => {
+        let result = players[Math.floor(Math.random()*players.length)];
+        setResult(result)
+    }
+
+    const resetGameHandler = () => {
+        setStage(1);
+        setPlayers([]);
+        setResult('')
+    }
 
     return(
         <>
@@ -46,7 +59,9 @@ const MyProvider = (props) => {
                 //METHODS
                 addPlayer:addPlayerHandler,
                 removePlayer:removePlayerHandler,
-                next:nextHandler
+                next:nextHandler,
+                generateNewLoser:generateLoser,
+                resetGame:resetGameHandler
             }}>
                 {props.children}
             </MyContext.Provider>
