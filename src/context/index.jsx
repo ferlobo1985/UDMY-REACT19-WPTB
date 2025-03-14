@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
 
 const MyContext = createContext();
 
@@ -22,6 +23,18 @@ const MyProvider = (props) => {
         setPlayers(newArray);
     }
 
+    const nextHandler = () => {
+        if(players.length < 2){
+            toast.error('You need more than one player',{
+                position:'top-left',
+                autoClose:2000
+            })
+        } else {
+            // next stage
+            setStage(2)
+        }
+    }
+
 
     return(
         <>
@@ -32,10 +45,12 @@ const MyProvider = (props) => {
                 result:result,
                 //METHODS
                 addPlayer:addPlayerHandler,
-                removePlayer:removePlayerHandler
+                removePlayer:removePlayerHandler,
+                next:nextHandler
             }}>
                 {props.children}
             </MyContext.Provider>
+            <ToastContainer/>
         </>
     )
 }
