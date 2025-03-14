@@ -4,15 +4,22 @@ const MyContext = createContext();
 
 const MyProvider = (props) => {
     const [stage,setStage] = useState(1);
-    const [players,setPlayer] = useState([]);
+    const [players,setPlayers] = useState([]);
     const [result,setResult] = useState('')
 
     const addPlayerHandler = (name) => {
         console.log(players)
-        setPlayer(prevState=>([
+        setPlayers(prevState=>([
             ...prevState,
             name
         ]))
+    }
+
+
+    const removePlayerHandler = (idx) => {
+        let newArray = [...players];
+        newArray.splice(idx,1)
+        setPlayers(newArray);
     }
 
 
@@ -24,7 +31,8 @@ const MyProvider = (props) => {
                 players:players,
                 result:result,
                 //METHODS
-                addPlayer:addPlayerHandler
+                addPlayer:addPlayerHandler,
+                removePlayer:removePlayerHandler
             }}>
                 {props.children}
             </MyContext.Provider>
